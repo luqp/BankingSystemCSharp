@@ -1,12 +1,13 @@
 ﻿using System;
 
-namespace BankingSystemCSharp
+namespace BankingSystem
 {
     class Program
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            BankClient bank = new BankClient();
+            bank.run();
         }
     }
 }
