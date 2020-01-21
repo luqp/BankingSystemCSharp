@@ -5,16 +5,16 @@ using System.Text;
 
 namespace BankingSystem.BusinessLogic
 {
-    class Bank
+    public class Bank
     {
         private Dictionary<int, BankAccount> accounts;
         private int nextAccount;
 
 
-        public Bank()
+        public Bank(Dictionary<int, BankAccount> accounts)
         {
-            this.accounts = new Dictionary<int, BankAccount>();
-            this.nextAccount = 0;
+            this.accounts = accounts;
+            this.nextAccount = 0; // Could be with Dependency injection
             InterestRate = 0.01;
         }
 

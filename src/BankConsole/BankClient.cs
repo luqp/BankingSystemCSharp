@@ -15,10 +15,10 @@ namespace BankingSystem
             this.currentAccount = 0;        
         }
 
-        public void run()
+        public void run(BankService bankService)
         {
             
-            bankService = new BankService();
+            this.bankService = bankService;
             while(!done)
             {
                 Console.Write("Enter command (0=quit, 1=new, 2=select, 3=deposit, 4=loan, 5=show, 6=interest): ");
