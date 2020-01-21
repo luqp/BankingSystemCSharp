@@ -2,7 +2,7 @@ using System;
 
 namespace BankingSystem.BusinessLogic
 {
-    class BankAccount
+    public class BankAccount
     {
 
         public BankAccount(int accountNumber, AccountOrigin accountOrigin)

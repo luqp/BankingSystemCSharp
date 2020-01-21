@@ -6,9 +6,9 @@ namespace BankingSystem.BusinessLogic
     {
         private Bank bank;
 
-        public BankService()
+        public BankService(Bank bank)
         {
-            this.bank = new Bank();
+            this.bank = bank;
         }
 
         public int GetBalance(int accountNumber)
