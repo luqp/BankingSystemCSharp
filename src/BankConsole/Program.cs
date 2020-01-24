@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using BankingSystem.BusinessLogic;
+using BankingSystem.Bank;
 
 namespace BankingSystem
 {
@@ -8,11 +8,12 @@ namespace BankingSystem
     {
         static void Main(string[] args)
         {
-            Dictionary<int, BankAccount> accounts = new Dictionary<int, BankAccount>();
-            Bank bank = new Bank(accounts);
-            BankService bankService = new BankService(bank);
+            CompareBankAccounts.Run();
+            
+            BankService bankService = new BankService(new Bank.Bank());
             BankClient bankSystem = new BankClient();
             bankSystem.run(bankService);
+
         }
     }
 }
