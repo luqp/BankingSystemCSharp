@@ -1,6 +1,6 @@
 using System;
 
-namespace BankingSystem.BusinessLogic
+namespace BankingSystem.Bank
 {
     public class BankService
     {
@@ -13,34 +13,41 @@ namespace BankingSystem.BusinessLogic
 
         public int GetBalance(int accountNumber)
         {
-            BankAccount bankAccount = bank.GetBankAccount(accountNumber);
+            IBankAccount bankAccount = bank.GetBankAccount(accountNumber);
             return bankAccount.Balance;
         }
 
-        public int newAccount(string accountOrigin)
-        {
+        public int NewAccount(string accountType, string accountOrigin)
+        { 
+            AccountType type = (AccountType)Enum.Parse(typeof(AccountType), accountType, true);
+            AccountOrigin origin;
+
             if (accountOrigin.Equals(""))
             {
-                return bank.NewAccount();
+                origin = default(AccountOrigin);   
             }
-
-            if (Enum.TryParse(accountOrigin, true, out AccountOrigin origin))
+            else
             {
-                return bank.NewAccount(origin);
+                origin = (AccountOrigin)Enum.Parse(typeof(AccountOrigin), accountOrigin, true);
             }
             
-            throw new ArgumentException($"<{accountOrigin}> is not a valid origin.");
+            return NewAccount(type, origin);
+        }
+
+        public int NewAccount(AccountType accountType, AccountOrigin accountOrigin)
+        {
+            return bank.AddNewAccount(accountType, accountOrigin);
         }
 
         public void Deposit(int accountNumber, int amount)
         {
-            BankAccount bankAccount = bank.GetBankAccount(accountNumber);
+            IBankAccount bankAccount = bank.GetBankAccount(accountNumber);
             bankAccount.Deposit(amount);
         }
 
         public bool AuthorizeLoan(int accountNumber, int loanAmount)
         {
-            BankAccount bankAccount = bank.GetBankAccount(accountNumber);
+            IBankAccount bankAccount = bank.GetBankAccount(accountNumber);
             // TODO: intermediate checks
             return bankAccount.HasEnoughCollateral(loanAmount);
         }

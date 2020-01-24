@@ -1,20 +1,23 @@
-using System;
+﻿using System;
 
-namespace BankingSystem.BusinessLogic
+namespace BankingSystem.Bank
 {
-    public class BankAccount
+    public class SavingsAccount : IBankAccount
     {
 
-        public BankAccount(int accountNumber, AccountOrigin accountOrigin)
+        public SavingsAccount(int accountNumber, AccountOrigin accountOrigin)
         {
             AccountNumber = accountNumber;
             AccountOrigin = accountOrigin;
             Balance = 0;
+            InterestRate = 0.01;
         }
 
         public int AccountNumber { get; }
         public AccountOrigin AccountOrigin { get; }
         public int Balance { get; private set;}
+
+        public double InterestRate { get; }
 
         public void Deposit(int amount)
         {
@@ -26,7 +29,7 @@ namespace BankingSystem.BusinessLogic
             Balance += amount;
         }
 
-        public void withdraw(int amount)
+        public void Withdraw(int amount)
         {
             if (amount <= 0) 
             {
@@ -48,6 +51,16 @@ namespace BankingSystem.BusinessLogic
         public bool ChangeAccount(AccountOrigin AccountOrigin)
         {
             return false;
+        }
+
+        public int CompareTo(IBankAccount toCompare)
+        {
+            int balance1 = Balance;
+            int balance2 = toCompare.Balance;
+            if (balance1 == balance2)
+                return AccountNumber - toCompare.AccountNumber;
+            else
+                return balance1 - balance2;
         }
     }
 }
