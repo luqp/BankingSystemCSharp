@@ -1,5 +1,5 @@
 using System;
-using BankingSystem.BusinessLogic;
+using BankingSystem.BankLogic;
 
 namespace BankingSystem
 {
@@ -79,9 +79,11 @@ namespace BankingSystem
 
         private void newAccount()
         {
-            Console.Write("Specify the origin of the account (Local, Rural, Foreign): ");
+            Console.Write("Specify the 'origin' of the account (Local, Rural, Foreign): ");
             string accountOrigin = Console.ReadLine();
-            currentAccount = bankService.newAccount(accountOrigin);
+            Console.Write("Specify the 'type' of the account\n\t1 (Checking account)\n\t2 (Saving account)\n:");
+            string accountType = Console.ReadLine().Replace(" ", "").Replace("\t", "");
+            currentAccount = bankService.NewAccount(accountType, accountOrigin);
             Console.WriteLine("Your new account number is: " + currentAccount);
         }
 

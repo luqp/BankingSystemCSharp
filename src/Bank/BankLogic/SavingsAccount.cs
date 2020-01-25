@@ -1,20 +1,21 @@
-using System;
+﻿using System;
 
-namespace BankingSystem.BusinessLogic
+namespace BankingSystem.BankLogic
 {
-    public class BankAccount
+    public class SavingsAccount : IBankAccount
     {
-
-        public BankAccount(int accountNumber, AccountOrigin accountOrigin)
+        public SavingsAccount(int accountNumber, AccountOrigin accountOrigin)
         {
             AccountNumber = accountNumber;
             AccountOrigin = accountOrigin;
             Balance = 0;
+            InterestRate = 0.01;
         }
 
         public int AccountNumber { get; }
         public AccountOrigin AccountOrigin { get; }
         public int Balance { get; private set;}
+        public double InterestRate { get; }
 
         public void Deposit(int amount)
         {
@@ -26,7 +27,7 @@ namespace BankingSystem.BusinessLogic
             Balance += amount;
         }
 
-        public void withdraw(int amount)
+        public void Withdraw(int amount)
         {
             if (amount <= 0) 
             {
@@ -43,11 +44,6 @@ namespace BankingSystem.BusinessLogic
         public bool HasEnoughCollateral(int amount)
         {
             return amount > 0 && Balance >= amount / 2;
-        }
-
-        public bool ChangeAccount(AccountOrigin AccountOrigin)
-        {
-            return false;
         }
     }
 }
