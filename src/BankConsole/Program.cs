@@ -6,8 +6,6 @@ namespace BankingSystem
     {
         static void Main(string[] args)
         {
-            CompareBankAccounts.Run();
-            
             BankService bankService = new BankService(new Bank());
             BankClient bankSystem = new BankClient();
             bankSystem.run(bankService);

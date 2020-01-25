@@ -4,7 +4,6 @@ namespace BankingSystem.BankLogic
 {
     public class CheckingAccount : IBankAccount
     {
-
         public CheckingAccount(int accountNumber, AccountOrigin accountOrigin)
         {
             AccountNumber = accountNumber;
@@ -45,19 +44,6 @@ namespace BankingSystem.BankLogic
         public bool HasEnoughCollateral(int amount)
         {
             return Balance >= 2 * amount / 3;
-        }
-
-        public bool ChangeAccount(AccountOrigin AccountOrigin)
-        {
-            return false;
-        }
-
-        public int CompareTo(IBankAccount toCompare)
-        {
-            if (Balance == toCompare.Balance)
-                return AccountNumber - toCompare.AccountNumber;
-            else
-                return Balance - toCompare.Balance;
         }
     }
 }

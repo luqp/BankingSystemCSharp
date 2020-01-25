@@ -45,18 +45,5 @@ namespace BankingSystem.BankLogic
         {
             return amount > 0 && Balance >= amount / 2;
         }
-
-        public bool ChangeAccount(AccountOrigin AccountOrigin)
-        {
-            return false;
-        }
-
-        public int CompareTo(IBankAccount toCompare)
-        {
-            if (Balance == toCompare.Balance)
-                return AccountNumber - toCompare.AccountNumber;
-            else
-                return Balance - toCompare.Balance;
-        }
     }
 }

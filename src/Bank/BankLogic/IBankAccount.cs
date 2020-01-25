@@ -2,7 +2,7 @@
 
 namespace BankingSystem.BankLogic
 {
-    public interface IBankAccount : IComparable<IBankAccount>
+    public interface IBankAccount
     {
         int AccountNumber { get; }
         AccountOrigin AccountOrigin { get; }
@@ -11,18 +11,5 @@ namespace BankingSystem.BankLogic
         void Deposit(int amount);
         void Withdraw(int amount);
         bool HasEnoughCollateral(int amount);
-        bool ChangeAccount(AccountOrigin AccountOrigin);
-
-        static IBankAccount CreateSavingWithDeposit(int accountNumber, int amount, AccountOrigin origin)
-        {
-            IBankAccount bankAccount = new SavingsAccount(accountNumber, origin);
-            bankAccount.Deposit(amount);
-            return bankAccount;
-        }
-
-        bool IsEmpty()
-        {
-            return Balance == 0;
-        }
     }
 }
