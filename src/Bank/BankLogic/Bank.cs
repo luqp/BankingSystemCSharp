@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace BankingSystem.Bank
+namespace BankingSystem.BankLogic
 {
     public class Bank
     {
@@ -30,8 +30,8 @@ namespace BankingSystem.Bank
             type switch
             {
                 AccountType.CheckingAccount => new CheckingAccount(NextAccountNumber, origin),
-                AccountType.SavingsAccount  => new SavingsAccount(NextAccountNumber, origin),
-                _                           => throw new ArgumentException(message: "invalid enum value", paramName: nameof(type)),
+                AccountType.SavingAccount   => new SavingsAccount(NextAccountNumber, origin),
+                _                           => throw new ArgumentException(message: "Invalid enum value", paramName: nameof(type)),
                 
             };
 

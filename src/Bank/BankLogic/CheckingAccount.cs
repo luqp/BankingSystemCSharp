@@ -1,6 +1,6 @@
 using System;
 
-namespace BankingSystem.Bank
+namespace BankingSystem.BankLogic
 {
     public class CheckingAccount : IBankAccount
     {
@@ -54,12 +54,10 @@ namespace BankingSystem.Bank
 
         public int CompareTo(IBankAccount toCompare)
         {
-            int balance1 = Balance;
-            int balance2 = toCompare.Balance;
-            if (balance1 == balance2)
+            if (Balance == toCompare.Balance)
                 return AccountNumber - toCompare.AccountNumber;
             else
-                return balance1 - balance2;
+                return Balance - toCompare.Balance;
         }
     }
 }

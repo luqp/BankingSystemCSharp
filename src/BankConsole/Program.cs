@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using BankingSystem.Bank;
+﻿using BankingSystem.BankLogic;
 
 namespace BankingSystem
 {
@@ -10,7 +8,7 @@ namespace BankingSystem
         {
             CompareBankAccounts.Run();
             
-            BankService bankService = new BankService(new Bank.Bank());
+            BankService bankService = new BankService(new Bank());
             BankClient bankSystem = new BankClient();
             bankSystem.run(bankService);
 

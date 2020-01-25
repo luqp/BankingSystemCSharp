@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using BankingSystem.Bank;
+using BankingSystem.BankLogic;
 
 namespace BankingSystem
 {

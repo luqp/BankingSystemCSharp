@@ -1,4 +1,4 @@
-namespace BankingSystem.Bank
+namespace BankingSystem.BankLogic
 {
     public enum AccountOrigin
     {

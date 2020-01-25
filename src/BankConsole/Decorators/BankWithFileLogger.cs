@@ -1,27 +1,26 @@
 using System;
 using System.IO;
-using System.Collections.Generic;
-using BankingSystem.Bank;
+using BankingSystem.BankLogic;
 
 namespace BankingSystem
 {
-    public class BankWithFileLogger : Bank.Bank
+    public class BankWithFileLogger : BankLogic.Bank
     {
-        private Bank.Bank bank;
+        private BankLogic.Bank bank;
 
-        public BankWithFileLogger(Bank.Bank bank)
+        public BankWithFileLogger(BankLogic.Bank bank)
         {
             this.bank = bank;
         }
 
-        // public override int NewAccount(AccountOrigin origin = AccountOrigin.LOCAL) {
-        //     using (StreamWriter stream = File.AppendText("file.txt")) 
-        //     {
-        //         stream.WriteLine(DateTime.Now.ToString() + ": Creating an account");
-        //     }
+        public override int AddNewAccount(AccountType type, AccountOrigin origin = AccountOrigin.LOCAL) {
+            using (StreamWriter stream = File.AppendText("file.txt")) 
+            {
+                stream.WriteLine(DateTime.Now.ToString() + ": Creating an account");
+            }
 
-        //     return bank.NewAccount(origin);
-        // }
+            return bank.AddNewAccount(type, origin);
+        }
 
         public override string ToString() {
             using (StreamWriter stream = File.AppendText("file.txt")) 

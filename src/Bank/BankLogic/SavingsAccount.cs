@@ -1,10 +1,9 @@
 ﻿using System;
 
-namespace BankingSystem.Bank
+namespace BankingSystem.BankLogic
 {
     public class SavingsAccount : IBankAccount
     {
-
         public SavingsAccount(int accountNumber, AccountOrigin accountOrigin)
         {
             AccountNumber = accountNumber;
@@ -16,7 +15,6 @@ namespace BankingSystem.Bank
         public int AccountNumber { get; }
         public AccountOrigin AccountOrigin { get; }
         public int Balance { get; private set;}
-
         public double InterestRate { get; }
 
         public void Deposit(int amount)
@@ -55,12 +53,10 @@ namespace BankingSystem.Bank
 
         public int CompareTo(IBankAccount toCompare)
         {
-            int balance1 = Balance;
-            int balance2 = toCompare.Balance;
-            if (balance1 == balance2)
+            if (Balance == toCompare.Balance)
                 return AccountNumber - toCompare.AccountNumber;
             else
-                return balance1 - balance2;
+                return Balance - toCompare.Balance;
         }
     }
 }

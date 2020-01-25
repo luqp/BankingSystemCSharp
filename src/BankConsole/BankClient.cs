@@ -1,5 +1,5 @@
 using System;
-using BankingSystem.Bank;
+using BankingSystem.BankLogic;
 
 namespace BankingSystem
 {
@@ -87,23 +87,13 @@ namespace BankingSystem
             Console.WriteLine("Your new account number is: " + currentAccount);
         }
 
-        private string TypeAccountName(string input)
-        {
-            string typeName;
-            switch (input)
+        private string TypeAccountName(string input) =>
+            input switch
             {
-                case "1":
-                    typeName = "CheckingAccount";
-                    break;
-                case "2":
-                    typeName = "SavingsAccount";
-                    break;
-                default:
-                    typeName = input.Trim();
-                    break;
-            }
-            return typeName;
-        }
+                "1" => "CheckingAccount",
+                "2" => "SavingsAccount",
+                _   => input.Replace(" ", "").Replace("\t", "").Trim(),
+            };
 
         private void select()
         {

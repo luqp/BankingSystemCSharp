@@ -1,8 +1,8 @@
-namespace BankingSystem.Bank
+namespace BankingSystem.BankLogic
 {
     public enum AccountType
     {
-        CheckingAccount,
-        SavingsAccount,
+        CheckingAccount = 1,
+        SavingAccount = 2,
     }    
 }

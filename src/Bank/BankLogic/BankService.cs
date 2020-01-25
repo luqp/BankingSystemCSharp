@@ -1,6 +1,6 @@
 using System;
 
-namespace BankingSystem.Bank
+namespace BankingSystem.BankLogic
 {
     public class BankService
     {
