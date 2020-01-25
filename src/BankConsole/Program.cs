@@ -9,7 +9,6 @@ namespace BankingSystem
             BankService bankService = new BankService(new Bank());
             BankClient bankSystem = new BankClient();
             bankSystem.run(bankService);
-
         }
     }
 }

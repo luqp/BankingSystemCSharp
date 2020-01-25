@@ -8,16 +8,14 @@ namespace BankingSystem.BankLogic
     public class Bank
     {
         private Dictionary<int, IBankAccount> accounts;
-        private int nextAccount;
+        private int nextNumber;
 
 
         public Bank()
         {
             this.accounts = new Dictionary<int, IBankAccount>();
-            this.nextAccount = 0; // Could be with Dependency injection
+            this.nextNumber = 0; // Could be with Dependency injection
         }
-
-        private int NextAccountNumber => nextAccount++;
 
         public virtual int AddNewAccount(AccountType accountType, AccountOrigin origin)
         {
@@ -29,8 +27,8 @@ namespace BankingSystem.BankLogic
         private IBankAccount CreateAccount(AccountType type, AccountOrigin origin) =>
             type switch
             {
-                AccountType.CheckingAccount => new CheckingAccount(NextAccountNumber, origin),
-                AccountType.SavingAccount   => new SavingsAccount(NextAccountNumber, origin),
+                AccountType.CheckingAccount => new CheckingAccount(nextNumber++, origin),
+                AccountType.SavingAccount   => new SavingsAccount(nextNumber++, origin),
                 _                           => throw new ArgumentException(message: "Invalid enum value", paramName: nameof(type)),
                 
             };
