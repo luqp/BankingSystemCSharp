@@ -27,9 +27,10 @@ namespace BankingSystem.BankLogic
         private IBankAccount CreateAccount(AccountType type, AccountOrigin origin) =>
             type switch
             {
-                AccountType.CheckingAccount => new CheckingAccount(nextNumber++, origin),
-                AccountType.SavingAccount   => new SavingsAccount(nextNumber++, origin),
-                _                           => throw new ArgumentException(message: "Invalid enum value", paramName: nameof(type)),
+                AccountType.SavingAccount    => new SavingAccount(nextNumber++, origin),
+                AccountType.RegularChecking  => new RegularChecking(nextNumber++, origin),
+                AccountType.InterestChecking => new InterestChecking(nextNumber++, origin),
+                _ => throw new ArgumentException(message: "Invalid enum value", paramName: nameof(type)),
                 
             };
 
@@ -58,8 +59,7 @@ namespace BankingSystem.BankLogic
             foreach (int accountNumber in accountNumbers)
             {
                 IBankAccount account = accounts[accountNumber];
-                string origin = account.AccountOrigin.ToString();
-                bankInformation.Append($"\n\tAccount {accountNumber} : balance = {account.Balance}, origin = {origin}");
+                bankInformation.Append($"\n\t{account}");
             }
 
             return bankInformation.ToString();

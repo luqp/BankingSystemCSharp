@@ -2,19 +2,19 @@
 
 namespace BankingSystem.BankLogic
 {
-    public class SavingsAccount : IBankAccount
+    public abstract class BankAccount : IBankAccount
     {
-        public SavingsAccount(int accountNumber, AccountOrigin accountOrigin)
+        protected BankAccount(int accountNumber, AccountOrigin accountOrigin, double interestRate)
         {
+            Balance = 0;
             AccountNumber = accountNumber;
             AccountOrigin = accountOrigin;
-            Balance = 0;
-            InterestRate = 0.01;
+            InterestRate = interestRate;
         }
 
         public int AccountNumber { get; }
         public AccountOrigin AccountOrigin { get; }
-        public int Balance { get; private set;}
+        public int Balance { get; protected set;}
         public double InterestRate { get; }
 
         public void Deposit(int amount)
@@ -43,7 +43,17 @@ namespace BankingSystem.BankLogic
 
         public bool HasEnoughCollateral(int amount)
         {
-            return amount > 0 && Balance >= amount / 2;
+            double ratio = CollateralRatio();
+            return amount > 0 && Balance >= amount * ratio;
         }
+
+        public override string ToString()
+        {
+            string type = GetAccountType();
+            return $"{type} account {AccountNumber}: balance = {Balance}, origin = {AccountOrigin}";
+        }
+
+        protected abstract double CollateralRatio();
+        protected abstract string GetAccountType();
     }
 }

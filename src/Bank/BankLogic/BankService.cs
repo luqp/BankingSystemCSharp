@@ -4,7 +4,7 @@ namespace BankingSystem.BankLogic
 {
     public class BankService
     {
-        private Bank bank;
+        private readonly Bank bank;
 
         public BankService(Bank bank)
         {
@@ -24,7 +24,7 @@ namespace BankingSystem.BankLogic
 
             if (accountOrigin.Equals(""))
             {
-                origin = default(AccountOrigin);   
+                origin = default;   
             }
             else
             {
