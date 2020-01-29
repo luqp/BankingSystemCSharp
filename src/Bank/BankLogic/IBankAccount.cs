@@ -5,7 +5,7 @@ namespace BankingSystem.BankLogic
     public interface IBankAccount
     {
         int AccountNumber { get; }
-        IOwnerStrategy OwnerType { get; }
+        IOwnerStrategy OriginOwner { get; }
         int Balance { get; }
         double InterestRate { get; }
         void Deposit(int amount);

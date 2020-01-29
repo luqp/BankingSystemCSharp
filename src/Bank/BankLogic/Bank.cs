@@ -10,7 +10,6 @@ namespace BankingSystem.BankLogic
         private Dictionary<int, IBankAccount> accounts;
         private int nextNumber;
 
-
         public Bank()
         {
             this.accounts = new Dictionary<int, IBankAccount>();
@@ -19,20 +18,10 @@ namespace BankingSystem.BankLogic
 
         public virtual int AddNewAccount(AccountType accountType, AccountOrigin origin)
         {
-            IBankAccount newBankAccount = CreateAccount(accountType, origin);
+            IBankAccount newBankAccount = IAccountsFactory.CreateAccount(accountType, origin, nextNumber++);
             accounts.Add(newBankAccount.AccountNumber, newBankAccount);
             return newBankAccount.AccountNumber;
         }
-
-        private IBankAccount CreateAccount(AccountType type, AccountOrigin origin) =>
-            type switch
-            {
-                AccountType.SavingAccount    => new SavingAccount(nextNumber++, origin),
-                AccountType.RegularChecking  => new RegularChecking(nextNumber++, origin),
-                AccountType.InterestChecking => new InterestChecking(nextNumber++, origin),
-                _ => throw new ArgumentException(message: "Invalid enum value", paramName: nameof(type)),
-                
-            };
 
         public IBankAccount GetBankAccount(int accountNumber)
         {
