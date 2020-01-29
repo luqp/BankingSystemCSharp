@@ -10,16 +10,7 @@ namespace BankingSystem
         private bool done;
         private int currentAccount;
         private BankService bankService;
-        private ICommand[] commands = {
-            new QuitCmd(),
-            new NewAccount(),
-            new SelectCmd(),
-            new DepositCmd(),
-            new Withdraw(),
-            new AuthorizeLoan(),
-            new ShowCmd(),
-            new AddInterest()
-        };
+        private CommandFactory cmdFactory = new CommandFactory();
 
         public BankClient()
         {
@@ -55,19 +46,21 @@ namespace BankingSystem
 
         private string GenerateMessage()
         {
+            string[] cmds = cmdFactory.cmdNames();
             StringBuilder message = new StringBuilder("Enter command (");
-            int lastItem = commands.Length - 1;
+            int lastItem = cmds.Length - 1;
+
             for (int i = 0; i < lastItem; i++)
             {
-                message.Append($"{i}={commands[i]} ");
+                message.Append($"{i}={cmds[i]} ");
             }
-            message.Append($"{lastItem}={commands[lastItem]}): ");
+            message.Append($"{lastItem}={cmds[lastItem]}): ");
             return message.ToString();
         }
 
-        private void ProcessCommand(int commandNumber)
+        private void ProcessCommand(int number)
         {
-            currentAccount = commands[commandNumber].Execute(bankService, currentAccount);
+            currentAccount = cmdFactory.GetCommand(number).Execute(bankService, currentAccount);
 
             if (currentAccount < 0)
             {
