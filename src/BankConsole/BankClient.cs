@@ -1,5 +1,7 @@
 using System;
 using BankingSystem.BankLogic;
+using BankConsole.Commands;
+using System.Text;
 
 namespace BankingSystem
 {
@@ -8,11 +10,22 @@ namespace BankingSystem
         private bool done;
         private int currentAccount;
         private BankService bankService;
+        private ICommand[] commands = {
+            new QuitCmd(),
+            new NewAccount(),
+            new SelectCmd(),
+            new DepositCmd(),
+            new Withdraw(),
+            new AuthorizeLoan(),
+            new ShowCmd(),
+            new AddInterest()
+        };
 
         public BankClient()
         {
-            this.done = false;
-            this.currentAccount = 0;        
+            done = false;
+            currentAccount = 0;
+
         }
 
         public void run(BankService bankService)
@@ -21,7 +34,7 @@ namespace BankingSystem
             this.bankService = bankService;
             while(!done)
             {
-                Console.Write("Enter command (0=quit, 1=new, 2=select, 3=deposit, 4=loan, 5=show, 6=interest): ");
+                Console.Write(GenerateMessage());
                 string input = Console.ReadLine();
                 
                 if(!Int32.TryParse(input, out int commandNumber))
@@ -40,98 +53,26 @@ namespace BankingSystem
             }
         }
 
+        private string GenerateMessage()
+        {
+            StringBuilder message = new StringBuilder("Enter command (");
+            int lastItem = commands.Length - 1;
+            for (int i = 0; i < lastItem; i++)
+            {
+                message.Append($"{i}={commands[i]} ");
+            }
+            message.Append($"{lastItem}={commands[lastItem]}): ");
+            return message.ToString();
+        }
+
         private void ProcessCommand(int commandNumber)
         {
-            switch (commandNumber)
+            currentAccount = commands[commandNumber].Execute(bankService, currentAccount);
+
+            if (currentAccount < 0)
             {
-                case 0:
-                    quit();
-                    break;
-                case 1:
-                    newAccount();
-                    break;
-                case 2:
-                    select();
-                    break;
-                case 3:
-                    deposit();
-                    break;
-                case 4:
-                    authorizeLoan();
-                    break;
-                case 5:
-                    showAll();
-                    break;
-                case 6:
-                    addInterest();
-                    break;
-                default:
-                    Console.WriteLine("Illegal command");
-                    break;
+                done = true;
             }
-        }
-
-        private void quit()
-        {
-            done = true;
-            Console.WriteLine("Byeee...");
-        }
-
-        private void newAccount()
-        {
-            Console.Write("Specify the 'origin' of the account (Local, Rural, Foreign): ");
-            string accountOrigin = Console.ReadLine();
-            Console.Write("Specify the 'type' of the account\n\t1 (Saving account)\n\t2 (Regular checking account)\n\t3 (Interest checking account)\n:");
-            string accountType = Console.ReadLine().Replace(" ", "").Replace("\t", "");
-            currentAccount = bankService.NewAccount(accountType, accountOrigin);
-            Console.WriteLine("Your new account number is: " + currentAccount);
-        }
-
-        private void select()
-        {
-            Console.Write("Enter account#: ");
-            string input = Console.ReadLine();
-            Int32.TryParse(input, out currentAccount);
-            
-            int balance = bankService.GetBalance(currentAccount);
-            Console.WriteLine($"The balance of account {currentAccount} is {balance}");
-        }
-
-        private void deposit()
-        {
-            Console.Write("Enter deposit amount: ");
-            string input = Console.ReadLine();
-            Int32.TryParse(input, out int amount);
-            
-            bankService.Deposit(currentAccount, amount);
-        }
-
-        private void authorizeLoan()
-        {
-            Console.Write("Enter loan amount: ");
-            string input = Console.ReadLine();
-            Int32.TryParse(input, out int loanAmount);
-
-            if (bankService.AuthorizeLoan(currentAccount, loanAmount))
-            {
-                Console.WriteLine("The loan was approved");
-            }
-            else
-            {
-                Console.WriteLine("The loan was denied");
-            }
-        }
-
-        private void showAll()
-        {
-            Console.WriteLine(bankService.GetBankInformation());
-        }
-
-        private void addInterest()
-        {
-            bankService.PayInterest();
-            Console.WriteLine("Interes were payed.");
         }
     }
-
 }

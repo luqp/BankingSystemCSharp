@@ -45,6 +45,12 @@ namespace BankingSystem.BankLogic
             bankAccount.Deposit(amount);
         }
 
+        public void Withdraw(int accountNumber, int amount)
+        {
+            IBankAccount bankAccount = bank.GetBankAccount(accountNumber);
+            bankAccount.Withdraw(amount);
+        }
+
         public bool AuthorizeLoan(int accountNumber, int loanAmount)
         {
             IBankAccount bankAccount = bank.GetBankAccount(accountNumber);

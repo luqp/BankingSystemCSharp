@@ -4,16 +4,25 @@ namespace BankingSystem.BankLogic
 {
     public abstract class BankAccount : IBankAccount
     {
-        protected BankAccount(int accountNumber, AccountOrigin accountOrigin, double interestRate)
+        protected BankAccount(int accountNumber, AccountOrigin origin, double interestRate)
         {
             Balance = 0;
             AccountNumber = accountNumber;
-            AccountOrigin = accountOrigin;
+            OwnerType = SelectOwnerType(origin);
             InterestRate = interestRate;
         }
 
+        private IOwnerStrategy SelectOwnerType(AccountOrigin origin) =>
+            origin switch
+            {
+                AccountOrigin.FOREIGN => new Foreign(),
+                AccountOrigin.LOCAL => new Local(),
+                AccountOrigin.RURAL => new Rural(),
+                _ => throw new ArgumentException(message: "Invalid enum value", paramName: nameof(origin)),
+            };
+
         public int AccountNumber { get; }
-        public AccountOrigin AccountOrigin { get; }
+        public IOwnerStrategy OwnerType { get; }
         public int Balance { get; protected set;}
         public double InterestRate { get; }
 
@@ -47,10 +56,15 @@ namespace BankingSystem.BankLogic
             return amount > 0 && Balance >= amount * ratio;
         }
 
+        public int Fee()
+        {
+            return OwnerType.Fee();
+        }
+
         public override string ToString()
         {
             string type = GetAccountType();
-            return $"{type} account {AccountNumber}: balance = {Balance}, origin = {AccountOrigin}";
+            return $"{type} account {AccountNumber}: balance = {Balance}, origin = {OwnerType}, fee = {Fee()}";
         }
 
         protected abstract double CollateralRatio();
