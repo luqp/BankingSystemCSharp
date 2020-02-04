@@ -8,12 +8,12 @@ namespace BankingSystem.BankLogic
         {
             Balance = 0;
             AccountNumber = accountNumber;
-            OriginOwner = Owner.GetOriginOwner(origin);
+            Owner = origin.GetOwner();
             InterestRate = interestRate;
         }
 
         public int AccountNumber { get; }
-        public IOwnerStrategy OriginOwner { get; }
+        public IAccountOwner Owner { get; }
         public int Balance { get; protected set;}
         public double InterestRate { get; }
 
@@ -49,13 +49,13 @@ namespace BankingSystem.BankLogic
 
         public int Fee()
         {
-            return OriginOwner.Fee();
+            return Owner.Fee();
         }
 
         public override string ToString()
         {
             string type = GetAccountType();
-            return $"{type} account {AccountNumber}: balance = {Balance}, origin = {OriginOwner.Origin}, fee = {Fee()}";
+            return $"{type} account {AccountNumber}: balance = {Balance}, origin = {Owner.Origin}, fee = {Fee()}";
         }
 
         protected abstract double CollateralRatio();

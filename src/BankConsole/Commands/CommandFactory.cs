@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Linq;
 
 namespace BankConsole.Commands
 {
@@ -22,14 +20,10 @@ namespace BankConsole.Commands
             return commands[commandNumber];
         }
 
-        public string[] cmdNames()
+        public string[] GetCommandNames()
         {
-            List<string> names = new List<string>();
-            foreach( var cmd in commands)
-            {
-                names.Add(cmd.ToString());
-            }
-            return names.ToArray();
+            return (from command in commands 
+                    select command.ToString()).ToArray();
         }
     }
 }

@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace BankingSystem.BankLogic
 {
@@ -8,16 +6,13 @@ namespace BankingSystem.BankLogic
     {
         IBankAccount Create(int accountNumber, AccountOrigin origin);
 
-        static IBankAccount CreateAccount(AccountType type, AccountOrigin origin, int accountNumber)
-        {
-            IAccountsFactory factory = type switch
+        static IBankAccount CreateAccount(AccountType type, AccountOrigin origin, int accountNumber) =>
+            type switch
             {
-                AccountType.SavingAccount => new SavingsFactory(),
-                AccountType.RegularChecking => new RegularCheckingFactory(),
-                AccountType.InterestChecking => new InterestCheckingFactory(),
-                _ => throw new ArgumentException(message: "Invalid enum value", paramName: nameof(origin)),
+                AccountType.SavingAccount => new SavingAccount(accountNumber, origin),
+                AccountType.RegularChecking => new RegularChecking(accountNumber, origin),
+                AccountType.InterestChecking => new InterestChecking(accountNumber, origin),
+                _ => throw new ArgumentException(message: "Invalid enum value", paramName: nameof(type)),
             };
-            return factory.Create(accountNumber, origin);
-        }
     }
 }
