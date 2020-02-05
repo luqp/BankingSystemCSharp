@@ -5,5 +5,5 @@ namespace BankingSystem.BankLogic
         SavingAccount = 1,
         RegularChecking = 2,
         InterestChecking,
-    }    
+    }
 }

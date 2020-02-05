@@ -1,6 +1,6 @@
 ﻿namespace BankingSystem.BankLogic
 {
-    public interface IOwnerStrategy
+    public interface IAccountOwner
     {
         AccountOrigin Origin { get; }
         int Fee();
